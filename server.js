@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const db = require("./models");
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 8080;
@@ -19,7 +20,7 @@ app.use(express.static("public"));
 
 // Requiring our routes
 require("./routes/html-routes.js")(app);
-// require("./routes/api-routes.js")(app);
+require("./routes/api-routes.js")(app);
 
 
 // Syncing our database and logging a message to the user upon success.
