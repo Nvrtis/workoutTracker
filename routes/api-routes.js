@@ -23,16 +23,23 @@ module.exports = function(app){
     });
 
 
-    app.get("/api/workouts/range",function(req,res){  
-        db.Workout.find()
-        .then(data =>{  
-            res.json(data)
-        })
-        .catch(err => { 
-            res.json(err)
-        })
-    });
-
+    app.get("/api/workouts/range", (req, res) =>{
+        //get duration of all workout 
+        db.Workout.aggregate( [
+          {
+            $addFields: {
+              totalDuration: { $sum: "$exercises.duration" } 
+              }
+          },
+       ]).then(dbWorkouts =>{
+         console.log(dbWorkouts)
+         res.json(dbWorkouts)
+       })
+       .catch(err => {
+        res.json(err)
+      })
+       }
+      )
 
 
     app.put("/api/workouts/:id",(req,res)=>{   
