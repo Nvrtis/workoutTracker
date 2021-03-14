@@ -1,52 +1,49 @@
-const db = require("./../models");
-module.exports = function (app) {
+const db = require("../models");
 
-// Route that call workout data from API
-app.get("/api/workouts", (req, res) => {
-    db.Workout.find({})
-        .then(dbWorkout => {
-            res.json(dbWorkout);
+module.exports = function(app){ 
+
+    app.post("/api/workouts", (req, res) => {
+        db.Workout.create(req.body)
+            .then(data => {
+                res.json(data);
+            })
+            .catch((err) => {
+                res.json(err);
+            });
+    });
+
+    app.get("/api/workouts",function(req,res){  
+        db.Workout.find({})
+        .then(data =>{  
+            res.json(data)
         })
-        .catch(err => {
-            res.json(err);
-        });
-});
-
-// Route to update workout data - referenced activity 14
-app.put("/api/workouts/:id", (req, res) => {
-    db.Workout.findByIdAndUpdate(req.params.id,+
-        { $push: { exercises: req.body } }, { new: true })
-        .then(dbWorkout => {
-            res.json(dbWorkout);
+        .catch(err => { 
+            res.json(err)
         })
-        .catch(err => {
-            res.json(err);
-        });
-});
+    });
 
-// Route to create new workout
-app.post("/api/workouts", (req, res) => {
-	db.Workout.create(req.body)
-		.then((dbWorkout) => {
-			res.json(dbWorkout);
-		})
-		.catch((err) => {
-			res.json(err);
-		});
-});
 
-// Route to populate workout dashboard
-app.get("/api/workouts/range", (req, res) => {
-    db.Workout.find({})
-        //get rid of sort and add 
-        .limit(10)
-        .then(dbWorkout => {
-            res.json(dbWorkout);
+    app.get("/api/workouts/range",function(req,res){  
+        db.Workout.find()
+        .then(data =>{  
+            res.json(data)
         })
-        .catch(err => {
-            res.json(err);
-        });
-});
+        .catch(err => { 
+            res.json(err)
+        })
+    });
+
+
+
+    app.put("/api/workouts/:id",(req,res)=>{   
+        db.Workout.findByIdAndUpdate(  
+         req.params.id,
+         {$push:{exercises:req.body} },
+         {new: true,runValidators:true }
+        )
+        .then(data => res.json(data))
+        .catch(err => { 
+            res.json(err)
+        })
+    });
 }
-
-

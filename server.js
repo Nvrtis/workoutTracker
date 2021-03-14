@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 8080;
 
 
 //connection mongoose
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true,
+useFindAndModify: false });
 
 // Creating express app and configuring middleware needed for authentication
 const app = express();
