@@ -11,6 +11,7 @@ async function initWorkout() {
       date: formatDate(lastWorkout.day),
       // totalDuration: lastWorkout.totalDuration,
       // Reduce=an expression to each element in an array and combines them into a single value.
+      // adds the totalDuration properly to the last summary list
       totalDuration: lastWorkout.exercises.reduce(
         (acc, ex) => acc + ex.duration,
         0

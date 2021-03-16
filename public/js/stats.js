@@ -22,6 +22,7 @@ function generatePalette() {
 }
 
 function populateChart(data) {
+  // takes the totalDuration created from the aggregate and maps it in properly for the graph
   let durations = data.map(({ totalDuration }) => totalDuration);
   let pounds = calculateTotalWeight(data);
   let workouts = workoutNames(data);
