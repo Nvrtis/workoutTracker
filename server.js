@@ -2,7 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const db = require("./models");
+const db = require("./models/index.js");
 
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 8080;
